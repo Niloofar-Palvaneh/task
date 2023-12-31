@@ -6,6 +6,8 @@ export default function Form() {
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
     const [toggle, setToggle] = useState(1)
+    const [error, setError] = useState(null)
+    const [isFormValid, setIsFormValid] = useState(false)
     const tabs = [
         {
             id: 1,
@@ -20,19 +22,43 @@ export default function Form() {
             title: "Password"
         },
     ]
-    const submitForm = () => {
-
+    const submitForm = (e) => {
+        e.preventDefault()
+        setIsFormValid(true)
+    }
+    const nextLevelName = () => {
+        const validEmail = new RegExp("^[a-zA-z]{2,}");
+        if (validEmail.test(name)) {
+            setToggle(toggle + 1)
+        } else {
+            setError({ title: "Name Is Not Valid" })
+        }
+    }
+    const nextLevelEmail = () => {
+        const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$");
+        if (validEmail.test(email)) {
+            setToggle(toggle + 1)
+        } else {
+            setError({ title: "Email Is Not Valid" })
+        }
     }
     return (
         <>
             <h2 className="text-center m-2 font-bold text-3xl text-gray-600">
-            Login Form
+                Login Form
             </h2>
+            {
+                isFormValid && (
+                    <div className="text-center bg-green-300 p-2">
+                        Welcome {name}
+                    </div>
+                )
+            }
             <ul className="flex gap-2 w-full items-center justify-center py-4">
                 {
                     tabs.map(tab => (
-                        <li onClick={() => setToggle(tab.id)}
-                            className={`border shadow cursor-pointer transition-all py-2 px-2 rounded-xl w-[100px] text-center font-bold text-xl
+                        <li key={tab.id}
+                            className={`border shadow  transition-all py-2 px-2 rounded-xl w-[100px] text-center font-bold text-xl
                           ${tab.id === toggle && "bg-gray-600 text-white"}`}>
                             {tab.title}
                         </li>
@@ -41,7 +67,7 @@ export default function Form() {
             </ul>
             <form >
                 <div className={`w-full flex items-center justify-center  ${toggle === 1 ? "block" : "hidden"}`}>
-                    <div className="group relative  flex flex-col justify-center items-center gap-8 font-bold text-xl">
+                    <div className="group relative  flex flex-col justify-center items-center font-bold text-xl">
                         <div className="bg-blue-50 w-full rounded-xl overflow-hidden shadow-xl border flex items-center justify-between p-2 ">
                             <input
                                 placeholder="Enter Your Name"
@@ -53,7 +79,10 @@ export default function Form() {
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                             </svg>
                         </div>
-                        <button className="bg-green-600  px-4 py-2 rounded-xl text-white flex items-end gap-2 group" onClick={() => setToggle(toggle + 1)}>
+                        <p className="text-sm text-red-600 mt-4">
+                            {error && "Name Is Not Valid"}
+                        </p>
+                        <button className="bg-green-600 mt-8 px-4 py-2 rounded-xl text-white flex items-end gap-2 group" onClick={nextLevelName}>
                             <span>Next Level</span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                 className="w-6 h-6 group-hover:translate-x-1 transition-all">
@@ -68,14 +97,17 @@ export default function Form() {
                             <input
                                 placeholder="Enter Your Email"
                                 value={email} onChange={(e) => setEmail(e.target.value)}
-                                id="1" type="text"
+                                id="1" type="email"
                                 className="peer w-full bg-transparent p-2  outline-none" />
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                             className="w-7 h-7 text-green-600">
+                                className="w-7 h-7 text-green-600">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
                             </svg>
                         </div>
-                        <button className="bg-green-600  px-4 py-2 rounded-xl text-white flex items-end gap-2 group" onClick={() => setToggle(toggle + 1)}>
+                        <p className="text-sm text-red-600 mt-4">
+                            {error && "Email Is Not Valid"}
+                        </p>
+                        <button className="bg-green-600  px-4 py-2 rounded-xl text-white flex items-end gap-2 group" onClick={nextLevelEmail}>
                             <span> Next Level</span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                 className="w-6 h-6 group-hover:translate-x-1 transition-all">
@@ -90,14 +122,14 @@ export default function Form() {
                             <input
                                 placeholder="Enter Your Password"
                                 value={pass} onChange={(e) => setPass(e.target.value)}
-                                id="1" type="text"
+                                id="1" type="password"
                                 className="peer w-full bg-transparent p-2  outline-none" />
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                 className="w-7 h-7 text-green-600">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
                         </div>
-                        <button className="bg-green-600  px-4 py-2 rounded-xl text-white flex items-end gap-2 group" onClick={submitForm}>
+                        <button className="bg-green-600  px-4 py-2 rounded-xl text-white flex items-end gap-2 group" onClick={(e) => submitForm(e)}>
                             <span>
                                 {
                                     toggle === 3 && "Submit Form"
