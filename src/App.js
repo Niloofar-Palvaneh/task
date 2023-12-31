@@ -1,24 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import Form from './componrnts/form/Form';
+import Table from './componrnts/table/Table';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className='flex gap-24 items-center justify-center w-full'>
+        <div className='w-[90%] flex flex-col items-center justify-center gap-24 sm:w-full'>
+          <div className='w-full'>
+            <Form />
+          </div>
+          <div className='w-full '>
+            <Table />
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
