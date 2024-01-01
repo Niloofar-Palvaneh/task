@@ -74,12 +74,28 @@ export default function Table() {
     return (
         <>
             <div className="w-full p-4 mt-24 mb-12 flex flex-col  items-center justify-center">
-                <div className={`${showEditModal ? "block" : "hidden"} w-[400px] h-[350px] bg-red-300 absolute border border-4  border-green-500 rounded`}>
-                    <h3 >
-                        {todoWantUpdated}
-                    </h3>
-                    <input type="text" value={updateInputValue} onChange={e => setUpdateInputValue(e.target.value)} />
-                    <button className="bg-blue-500 p-1" onClick={updateHandler}>update</button>
+                <div className={`z-50 text-center p-8 ${showEditModal ? "flex flex-col gap-8" : "hidden"} w-[400px] h-[350px] bg-gray-300 absolute border border-4  border-green-500 rounded`}>
+                    <p >
+                        <span>Your todo title: </span>
+                        <span className="font-bold">{todoWantUpdated}</span>
+                    </p>
+                    <div className="bg-blue-50 font-bold w-full rounded-xl overflow-hidden shadow-xl border flex items-center justify-between p-2 ">
+                        <input
+                            value={updateInputValue} onChange={e => setUpdateInputValue(e.target.value)}
+                            placeholder="What Do You Want To Write?"
+                            id="1" type="text"
+                            className="peer w-full bg-transparent p-2  outline-none" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className=" border border-green-500 p-1 rounded-md text-green-500 w-9 h-8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                        </svg>
+                    </div>
+                    <button className="bg-green-600 mt-8 px-4 py-2 rounded-xl text-white flex items-end justify-center gap-2 group" onClick={updateHandler}>
+                        <span>Update</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                            className="w-6 h-6 group-hover:translate-x-1 transition-all">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                        </svg>
+                    </button>
                 </div>
                 <div>
                     <h2 className="text-center m-4 font-bold text-3xl text-gray-600">
